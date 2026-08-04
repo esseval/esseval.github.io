@@ -43,7 +43,9 @@
                 document.getElementById('loading').style.display = 'none';
 
                 // Filtramos para ignorar forkls si lo deseas, y ordenar
-                repos.forEach(repo => {
+                repos
+                    .filter(repo => repo.name.toLowerCase() !== `${USERNAME.toLowerCase()}.github.io`)
+                    .forEach(repo => {
                     const card = document.createElement('div');
                     card.className = 'card';
                     
