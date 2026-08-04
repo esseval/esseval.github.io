@@ -50,11 +50,15 @@
                     card.className = 'card';
                     
                     const languageHtml = repo.language ? `<span class="badge">${repo.language}</span>` : '';
-                    
+                    const pagesHtml = repo.has_pages
+                        ? `<p><a href="https://${USERNAME}.github.io/${repo.name}/" target="_blank">🔗 Ver página</a></p>`
+                        : '';
+
                     card.innerHTML = `
                         <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
                         <p>${repo.description || 'Sin descripción disponible.'}</p>
                         ${languageHtml}
+                        ${pagesHtml}
                     `;
                     container.appendChild(card);
                 });
