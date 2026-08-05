@@ -33,6 +33,12 @@
         const USERNAME = 'esseval'; 
         const REPOS_URL = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`;
 
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str ?? '';
+            return div.innerHTML;
+        }
+
         fetch(REPOS_URL)
             .then(response => {
                 if (!response.ok) throw new Error('Error al conectar con GitHub');
@@ -51,14 +57,14 @@
                     
                     const languageHtml = repo.language ? `<span class="badge">${repo.language}</span>` : '';
                     const pagesHtml = repo.has_pages
-                        ? `<p><a href="https://${USERNAME}.github.io/${repo.name}/" target="_blank">🔗 Ver página</a></p>`
+                        ? `<a href="https://${USERNAME}.github.io/${repo.name}/" alt="Ver página" target="_blank">🔗</a>`
                         : '';
 
                     card.innerHTML = `
-                        <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-                        <p>${repo.description || 'Sin descripción disponible.'}</p>
-                        ${languageHtml}
-                        ${pagesHtml}
+                        
+                        <h3><a href="${repo.html_url}" target="_blank">${escapeHtml(repo.name)}</a>${pagesHtml}</h3>
+                        <p>${escapeHtml(repo.description) || 'Sin descripción disponible.'}</p>
+                        ${languageHtml}                        
                     `;
                     container.appendChild(card);
                 });
